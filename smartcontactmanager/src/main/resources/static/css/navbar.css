@@ -1,0 +1,292 @@
+body {
+    margin: 0;
+    font-family: Roboto, sans-serif;
+    background-color: #fff;
+    padding-top: 80px; /* Adjust padding to accommodate horizontal navbar */
+    transition: padding-left 0.3s ease-in-out;
+}
+
+/* Horizontal Navbar Styles */
+nav.horizontal {
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #fff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 60px;
+    z-index: 1000;
+    transition: left 0.3s ease-in-out, width 0.3s ease-in-out;
+}
+
+.logo-horizontal {
+    font-family: 'Pacifico', cursive;
+    background: linear-gradient(45deg, #FF6B6B, #FFD93D);
+    font-weight: bold;
+    font-size: 16px;
+    color: white;
+    padding: 6px 14px;
+    border: 1px solid white;
+    border-radius: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease-in-out;
+}
+
+.logo-horizontal:hover {
+    transform: scale(1.1);
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
+}
+
+.nav-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.nav-center input[type="text"] {
+    font-size: 16px;
+    padding: 10px 15px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    width: 300px;
+    margin-bottom: 20px;
+    transition: border-color 0.3s ease-in-out, width 0.3s ease-in-out;
+}
+
+.nav-center input[type="text"]:focus {
+    border-color: #61A4D0;
+    width: 350px;
+}
+
+/* Vertical Navbar Styles */
+nav.vertical {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: #fff; 
+    color: black;
+    height: calc(100vh - 80px); /* Height adjusted to subtract the height of the horizontal navbar */
+    width: 150px; /* Initial width */
+    position: fixed;
+    top: 80px; /* Positioned below the horizontal navbar */
+    left: 0;
+    z-index: 900;
+    transition: width 0.3s ease-in-out;
+}
+
+nav.vertical.open {
+    width: 60px;
+}
+nav.vertical.open .nav-link span{
+    display: none;
+}
+nav.vertical.open .nav-link i{
+    font-size: 20px;
+}
+.vertical .nav-link a i {
+    margin-right: 10px; /* Space between icon and text */
+    transition: font-size 0.3s ease-in-out;
+}
+
+.vertical .logo {
+    font-family: 'Pacifico', cursive;
+    font-weight: bold;
+    font-size: 22px;
+    color: #fff;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.vertical .nav-link {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.vertical .nav-link li {
+    margin-bottom: 15px;
+}
+
+.vertical .nav-link a {
+    text-decoration: none;
+    color: #adb5bd; /* Light gray text for links */
+    font-size: 16px;
+    padding: 12px 15px;
+    display: block;
+    border-radius: 8px;
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+.vertical .nav-link a:hover {
+    background-color: #61A4D0;
+    color: #fff;
+}
+
+/* Button Styles */
+.menu-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px 20px;
+    width: 60px;
+    height: 60px;
+    font-size: 20px;
+    font-weight: bolder;
+    color: black;
+    background-color: whitesmoke;
+    border: none;
+    border-radius: 50%; /* Make it circular */
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.menu-toggle:hover {
+    background-color: #8f969b;
+    transform: scale(1.1);
+}
+
+.menu-toggle:focus {
+    outline: none; /* Remove default focus outline */
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    nav.vertical {
+        width: 0;
+        overflow: hidden;
+        position: fixed;
+        left: 0;
+        top: 80px; /* Adjusted top position */
+        height: calc(100vh - 80px);
+        z-index: 1000;
+        background-color: #343a40;
+    }
+
+    nav.vertical.open {
+        width: 200px;
+    }
+
+    .main-content {
+        margin-left: 0; /* Remove left margin on smaller screens */
+    }
+
+    nav.horizontal {
+        left: 0;
+        width: 100%;
+    }
+
+    .nav-center input[type="text"] {
+        width: 200px;
+    }
+
+    .nav-center input[type="text"]:focus {
+        width: 250px;
+    }
+
+    body.navbar-open {
+        padding-left: 200px;
+    }
+}
+
+/* Main Content Adjustments */
+.main-content {
+    margin-left: 200px; /* Adjust margin to match navbar width */
+    padding: 20px;
+    transition: margin-left 0.3s ease-in-out;
+}
+nav.vertical.open ~ .container .main-content {
+    margin-left: 60px; 
+}
+
+/* SignUp Button Styles */
+.signup {
+    text-decoration: none;
+    color: #adb5bd; 
+    font-size: 16px;
+    font-weight: bold;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    margin-right: 40px;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+    background-color: #f8f9fa; /* Light background */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow */
+}
+
+.signup a {
+    display: flex;
+    align-items: center;
+    color: inherit; /* Maintain the color on the link */
+}
+
+.signup a i {
+    margin-right: 8px; /* Space between icon and text */
+}
+
+.signup:hover {
+    background-color: #61A4D0;
+    color: #fff;
+    transform: translateY(-2px); /* Subtle lift effect */
+}
+
+.signup:hover i {
+    transform: scale(1.1); /* Slight icon enlargement */
+}
+
+.signup a:hover {
+    color: inherit; /* Ensure color transition on hover */
+}
+
+/* LogIn Button Styles */
+.login {
+    text-decoration: none;
+    color: #adb5bd; 
+    font-size: 16px;
+    font-weight: bold;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    margin-right: 40px;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+    background-color: #f8f9fa; /* Light background */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow */
+}
+
+.login a {
+    display: flex;
+    align-items: center;
+    color: inherit; /* Maintain the color on the link */
+}
+
+.login a i {
+    margin-right: 8px; /* Space between icon and text */
+}
+
+.login:hover {
+    background-color: #61A4D0;
+    color: #fff;
+    transform: translateY(-2px); /* Subtle lift effect */
+}
+
+.login:hover i {
+    transform: scale(1.1); /* Slight icon enlargement */
+}
+
+.login a:hover {
+    color: inherit; /* Ensure color transition on hover */
+}
