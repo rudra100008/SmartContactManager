@@ -1,9 +1,12 @@
 body {
     margin: 0;
     font-family: Roboto, sans-serif;
-    background-color: #fff;
-    padding-top: 80px; /* Adjust padding to accommodate horizontal navbar */
+    background-color: #f4f4f4;
+    padding-top: 80px; /* Adjust padding to accommodate the horizontal navbar */
     transition: padding-left 0.3s ease-in-out;
+}
+h1, h2, h3, h4, h5, h6 {
+    color: #333;/* Blue for headings */
 }
 
 /* Horizontal Navbar Styles */
@@ -12,13 +15,14 @@ nav.horizontal {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: #fff;
+    background: linear-gradient(90deg, #6D9BD2, #8FBFE0); 
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 60px;
     z-index: 1000;
+    /* box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);  */
     transition: left 0.3s ease-in-out, width 0.3s ease-in-out;
 }
 
@@ -26,17 +30,15 @@ nav.horizontal {
     font-family: 'Pacifico', cursive;
     background: linear-gradient(45deg, #FF6B6B, #FFD93D);
     font-weight: bold;
-    font-size: 16px;
+    font-size: 18px;
     color: white;
     padding: 6px 14px;
-    border: 1px solid white;
-    border-radius: 10px;
+    border-radius: 12px;
     text-transform: uppercase;
     letter-spacing: 1px;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
     transition: transform 0.3s ease-in-out;
 }
 
@@ -53,18 +55,17 @@ nav.horizontal {
 }
 
 .nav-center input[type="text"] {
-    font-size: 16px;
-    padding: 10px 15px;
-    border-radius: 20px;
+    font-size: 14px;
+    padding: 8px 15px;
+    border-radius: 20px; /* Softer corners */
     border: 1px solid #ccc;
-    width: 300px;
-    margin-bottom: 20px;
+    width: 250px;
     transition: border-color 0.3s ease-in-out, width 0.3s ease-in-out;
 }
 
 .nav-center input[type="text"]:focus {
-    border-color: #61A4D0;
-    width: 350px;
+    border-color: #007bff;
+    width: 300px;
 }
 
 /* Vertical Navbar Styles */
@@ -73,28 +74,29 @@ nav.vertical {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    background-color: #fff; 
-    color: black;
-    height: calc(100vh - 80px); /* Height adjusted to subtract the height of the horizontal navbar */
-    width: 150px; /* Initial width */
+    background-color: #34495E;
+    color: white;
+    height: calc(100vh - 80px);
+    width: 150px;
     position: fixed;
-    top: 80px; /* Positioned below the horizontal navbar */
+    top: 80px;
     left: 0;
     z-index: 900;
     transition: width 0.3s ease-in-out;
+    /* box-shadow: 4px 0 6px rgba(0, 0, 0, 0.1);  */
 }
 
 nav.vertical.open {
     width: 60px;
 }
-nav.vertical.open .nav-link span{
+nav.vertical.open .nav-link span {
     display: none;
 }
-nav.vertical.open .nav-link i{
+nav.vertical.open .nav-link i {
     font-size: 20px;
 }
 .vertical .nav-link a i {
-    margin-right: 10px; /* Space between icon and text */
+    margin-right: 10px;
     transition: font-size 0.3s ease-in-out;
 }
 
@@ -102,7 +104,7 @@ nav.vertical.open .nav-link i{
     font-family: 'Pacifico', cursive;
     font-weight: bold;
     font-size: 22px;
-    color: #fff;
+    color: #FFD93D;
     margin-bottom: 40px;
     text-align: center;
 }
@@ -139,14 +141,14 @@ nav.vertical.open .nav-link i{
     align-items: center;
     justify-content: center;
     margin: 10px 20px;
-    width: 60px;
-    height: 60px;
+    width: 40px;
+    height: 40px;
     font-size: 20px;
     font-weight: bolder;
     color: black;
-    background-color: whitesmoke;
+    background-color: #fff;
     border: none;
-    border-radius: 50%; /* Make it circular */
+    border-radius: 50%;
     cursor: pointer;
     transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
@@ -157,7 +159,7 @@ nav.vertical.open .nav-link i{
 }
 
 .menu-toggle:focus {
-    outline: none; /* Remove default focus outline */
+    outline: none;
 }
 
 /* Responsive Styles */
@@ -167,7 +169,7 @@ nav.vertical.open .nav-link i{
         overflow: hidden;
         position: fixed;
         left: 0;
-        top: 80px; /* Adjusted top position */
+        top: 80px;
         height: calc(100vh - 80px);
         z-index: 1000;
         background-color: #343a40;
@@ -178,7 +180,7 @@ nav.vertical.open .nav-link i{
     }
 
     .main-content {
-        margin-left: 0; /* Remove left margin on smaller screens */
+        margin-left: 0;
     }
 
     nav.horizontal {
@@ -201,18 +203,18 @@ nav.vertical.open .nav-link i{
 
 /* Main Content Adjustments */
 .main-content {
-    margin-left: 200px; /* Adjust margin to match navbar width */
+    margin-left: 200px;
     padding: 20px;
     transition: margin-left 0.3s ease-in-out;
 }
 nav.vertical.open ~ .container .main-content {
-    margin-left: 60px; 
+    margin-left: 60px;
 }
 
 /* SignUp Button Styles */
 .signup {
     text-decoration: none;
-    color: #adb5bd; 
+    color: #343a40;
     font-size: 16px;
     font-weight: bold;
     padding: 12px 20px;
@@ -222,38 +224,38 @@ nav.vertical.open ~ .container .main-content {
     border-radius: 8px;
     margin-right: 40px;
     transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
-    background-color: #f8f9fa; /* Light background */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    background-color: #FFD93D; /* Brighter background */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .signup a {
     display: flex;
     align-items: center;
-    color: inherit; /* Maintain the color on the link */
+    color: inherit;
 }
 
 .signup a i {
-    margin-right: 8px; /* Space between icon and text */
+    margin-right: 8px;
 }
 
 .signup:hover {
-    background-color: #61A4D0;
+    background-color: #0056b3;
     color: #fff;
-    transform: translateY(-2px); /* Subtle lift effect */
+    transform: translateY(-2px);
 }
 
 .signup:hover i {
-    transform: scale(1.1); /* Slight icon enlargement */
+    transform: scale(1.1);
 }
 
 .signup a:hover {
-    color: inherit; /* Ensure color transition on hover */
+    color: inherit;
 }
 
 /* LogIn Button Styles */
 .login {
     text-decoration: none;
-    color: #adb5bd; 
+    color: #343a40;
     font-size: 16px;
     font-weight: bold;
     padding: 12px 20px;
@@ -263,30 +265,50 @@ nav.vertical.open ~ .container .main-content {
     border-radius: 8px;
     margin-right: 40px;
     transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
-    background-color: #f8f9fa; /* Light background */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    background-color: #FFD93D;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .login a {
     display: flex;
     align-items: center;
-    color: inherit; /* Maintain the color on the link */
+    color: inherit;
 }
 
 .login a i {
-    margin-right: 8px; /* Space between icon and text */
+    margin-right: 8px;
 }
 
 .login:hover {
-    background-color: #61A4D0;
+    background-color: #0056b3;
     color: #fff;
-    transform: translateY(-2px); /* Subtle lift effect */
+    transform: translateY(-2px);
 }
 
 .login:hover i {
-    transform: scale(1.1); /* Slight icon enlargement */
+    transform: scale(1.1);
 }
 
 .login a:hover {
-    color: inherit; /* Ensure color transition on hover */
+    color: inherit;
 }
+.alert {
+    padding: 20px;
+    background-color: #f44336;
+    color: white;
+  }
+  
+  .closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .closebtn:hover {
+    color: black;
+  }

@@ -1,11 +1,31 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="https://www.thymeleaf.org">
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" th:href= "@{/css/index.css}">
+    <title>Home </title>
 </head>
 <body>
-    <div th:include= "~{navbar :: navbar }"></div>
+    <div th:replace= "~{navbar :: navbar(${title}) }"></div>
+    <div class="main-content">
+        <div class="banner">
+            <h1>Welcome to Your Contact Manager</h1>
+            <p>Manage your contacts efficiently and stay organized.</p>
+        </div>
+        <div class="features">
+            <div class="feature-item">
+                <i class="fas fa-address-book"></i>
+                <h3>Add Contacts</h3>
+                <p>Easily add and manage your contacts.</p>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-search"></i>
+                <h3>Search and Filter</h3>
+                <p>Quickly find the contact you're looking for.</p>
+            </div>
+        </div>
+        
+    </div>
 </body>
 </html>

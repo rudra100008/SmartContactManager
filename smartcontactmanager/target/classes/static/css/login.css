@@ -1,0 +1,115 @@
+body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #6e8efb, #a777e3);
+    height: 100vh;
+    font-family: 'Roboto', sans-serif;
+}
+
+.login-container {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0px 15px 35px rgba(0, 0, 0, 0.2);
+    padding: 50px;
+    width: 100%;
+    max-width: 420px;
+    position: relative;
+    animation: fadeIn 1s ease-in-out;
+}
+.signup-container{
+    left: 400px;
+    margin-top: 20px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0px 15px 35px rgba(0, 0, 0, 0.2);
+    padding: 30px;
+    width: 100%;
+    max-width: 600px;
+    position: relative;
+    animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.close-button {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 26px;
+    color: #6c757d;
+    text-decoration: none;
+    transition: color 0.3s, transform 0.3s;
+}
+
+.close-button:hover {
+    color: #333333;
+    transform: rotate(90deg);
+}
+
+.login-header {
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    color: #333333;
+}
+
+.form-label {
+    font-weight: 600;
+    color: #555555;
+}
+
+.form-control {
+    border-radius: 6px;
+    margin-bottom: 5px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.form-control:focus {
+    border-color: #6e8efb;
+    box-shadow: 0 0 5px rgba(110, 142, 251, 0.5);
+}
+
+.btn-primary {
+    background-color: #6e8efb;
+    border: none;
+    border-radius: 6px;
+    width: 100%;
+    padding: 12px;
+    font-size: 18px;
+    font-weight: 600;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn-primary:hover {
+    background-color: #5768db;
+    transform: translateY(-2px);
+}
+
+.btn-primary:active {
+    transform: translateY(1px);
+}
+
+.forgot-password {
+    display: block;
+    margin-top: 20px;
+    color: #666666;
+    font-size: 15px;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.forgot-password:hover {
+    color: #333333;
+}
+
