@@ -2,7 +2,6 @@ package com.smartcontactmanager.Entity;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,6 +11,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "User")
@@ -20,9 +21,13 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     @Column(unique = true)
+    @NotBlank(message = "Name is required!!")
+    @Size(min = 3,max = 16,message = "minimum character 3 and maximum character 16!!!")
     private String username;
     @Column(unique = true)
+    @NotBlank(message = "Email is required!!")
     private String email;
+    @Size(min = 3,max = 16,message = "Minimum character 3 and Maximum character 16!!!")
     private String password;
     private String position;
     private boolean enable;

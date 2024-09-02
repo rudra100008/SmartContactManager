@@ -1,20 +1,23 @@
 package com.smartcontactmanager.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.smartcontactmanager.Entity.User;
 import com.smartcontactmanager.Helper.Message;
 import com.smartcontactmanager.Services.UserServices;
 
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 
 
 
@@ -58,32 +61,50 @@ public class HomeController {
     public String signuppage(Model model,HttpSession session)
     {
         model.addAttribute("user", new User());
+        Message message=(Message) session.getAttribute("message");
+        if (message !=null) {
+           model.addAttribute("message", message);
+           session.removeAttribute("message");
+        }
         return "signup";
     }
     //handler for registration of user
     //this hanlder saves the user data in database
-    @PostMapping("/home/signup")
-public String signUpHandler(@ModelAttribute("user") User user,
+ @PostMapping("/home/signup")
+public String signUpHandler(@Valid @ModelAttribute("user") User user,
+                            BindingResult result,
                             @RequestParam(value = "isAgreed", defaultValue = "false") boolean isAgreed,
                             Model model,
-                            HttpSession session) {
+                            HttpSession session,
+                            HttpServletResponse response) 
+    {
+                           
     try {
         if (!isAgreed) {
             throw new Exception("You have not agreed to the terms and conditions");
         }
+        if (result.hasErrors()) {
+            model.addAttribute("user", new User());
+            return "signup";
+        } 
         user.setPosition("User");
         user.setEnable(true);
-        
+
         this.userServices.saveUser(user);
-        session.setAttribute("message", new Message("Successfully registered", "Alert-Success"));
-        return "redirect:/home/signup";
+        session.setAttribute("message", new Message("Successfully registered", "alert-success"));
+        response.setHeader("refresh","3; URL=/smartContactManager/home/login"); // 3 sec delay before redirecting
+        return "signup";
+    } catch (DataIntegrityViolationException e) {
+        // Handle unique constraint violation (e.g., duplicate email or username)
+        session.setAttribute("message", new Message("The email or username is already in use. Please choose another.", "Alert-Danger"));
+        return "signup";
     } catch (Exception e) {
         e.printStackTrace();
-        model.addAttribute("user", user); // Ensure user object is added back to the model
-        session.setAttribute("message", new Message("Something went wrong: " + e.getMessage(), "Alert-Danger"));
-        return "signup"; // Redirect to signup page to avoid resubmission
+        session.setAttribute("message", new Message("Something went wrong: " + e.getMessage(), " alert-danger"));
+        return "signup";
     }
 }
+    
 
 
 }
