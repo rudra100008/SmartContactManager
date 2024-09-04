@@ -11,6 +11,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
@@ -26,8 +27,9 @@ public class User {
     private String username;
     @Column(unique = true)
     @NotBlank(message = "Email is required!!")
+    @Email(message = "Email should be valid")
     private String email;
-    @Size(min = 3,max = 16,message = "Minimum character 3 and Maximum character 16!!!")
+    @NotBlank(message = "Password is required")
     private String password;
     private String position;
     private boolean enable;

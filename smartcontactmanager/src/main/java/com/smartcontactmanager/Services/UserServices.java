@@ -16,8 +16,8 @@ public class UserServices {
        User savedUser= this.userDao.save(user);
        return savedUser;
     }
-    public User findUser(String name)
+    public User findUserByUsername(String name)
     {
-        return this.userDao.findByusername(name);
+        return this.userDao.findByUsername(name);
     }
 }
