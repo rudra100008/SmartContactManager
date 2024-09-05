@@ -1,7 +1,10 @@
 package com.smartcontactmanager.Controller;
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,7 +36,6 @@ public class HomeController {
     @GetMapping("/home")
     public String homeHandler(Model model)
     {
-        model.addAttribute("title", "Contact Manager");
         return "index";
     }
     @GetMapping("/about")
@@ -48,15 +50,18 @@ public class HomeController {
     {
         return "login";
     }
-    @PostMapping("/home/login")
-    public String loginHandler(@ModelAttribute("user") User user) {
-        User foundUser = this.userServices.findUserByUsername(user.getUsername());
-        if (foundUser != null && passwordEncoder.matches(user.getPassword(), foundUser.getPassword())) {
-            return "redirect:/home";
-        } else {
-            return "redirect:/home/login";
-        }
-    }
+
+    //no need this as there is .loginProcessingUrl("/doLogin") in Config.class
+    // //login processing for username and login
+    // @PostMapping("/home/login")
+    // public String loginHandler(@ModelAttribute("user") User user) {
+    //     User foundUser = this.userServices.findUserByUsername(user.getUsername());
+    //     if (foundUser != null && passwordEncoder.matches(user.getPassword(), foundUser.getPassword())) {
+    //         return "redirect:/home";
+    //     } else {
+    //         return "redirect:/home/login";
+    //     }
+    // }
     
    // http://localhost:8080/smartContactManager/home/signup
     @GetMapping("/home/signup")

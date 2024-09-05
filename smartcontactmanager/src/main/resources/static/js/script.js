@@ -15,9 +15,9 @@ function toggleNavbar() {
 }
 function redirectToSignUp()
 {
-    windows.location.href="http://localhost:8080/signup";
+    windoww.location.href="http://localhost:8080/home/signup";
 }
 function redirectToLogin()
 {
-    windows.location.href="http://localhost:8080/login";
+    window.location.href="http://localhost:8080/home/login";
 }

@@ -14,7 +14,7 @@ public class Contact {
     @Id
     @GeneratedValue( strategy = GenerationType.AUTO)
     private int cid;
-    private String conctactname;
+    private String contactname;
     private String work;
     private String email;
     private String phonenumber;
@@ -23,10 +23,10 @@ public class Contact {
     private User user;
     @Column(length = 1000)
     private String description;
-    public Contact(int cid, String conctactname, String work, String email, String phonenumber, String image,
+    public Contact(int cid, String contactname, String work, String email, String phonenumber, String image,
             String description) {
         this.cid = cid;
-        this.conctactname = conctactname;
+        this.contactname = contactname;
         this.work = work;
         this.email = email;
         this.phonenumber = phonenumber;
@@ -41,11 +41,11 @@ public class Contact {
     public void setCid(int cid) {
         this.cid = cid;
     }
-    public String getConctactname() {
-        return conctactname;
+    public String getContactname() {
+        return contactname;
     }
-    public void setConctactname(String conctactname) {
-        this.conctactname = conctactname;
+    public void setContactname(String contactname) {
+        this.contactname = contactname;
     }
     public String getWork() {
         return work;
@@ -87,7 +87,7 @@ public class Contact {
     }
     @Override
     public String toString() {
-        return "Contact [cid=" + cid + ", conctactname=" + conctactname + ", work=" + work + ", email=" + email
+        return "Contact [cid=" + cid + ", conctactname=" + contactname + ", work=" + work + ", email=" + email
                 + ", phonenumber=" + phonenumber + ", image=" + image + ", description=" + description + "]";
     }
 }

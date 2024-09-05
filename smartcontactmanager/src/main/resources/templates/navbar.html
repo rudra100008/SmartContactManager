@@ -14,27 +14,36 @@
         <div class="nav-center">
             <input type="text" placeholder="Search..." />
         </div>
-        <div class="signup">
-            <a href="http://localhost:8080/smartContactManager/home/signup" onclick="redirectToSignUp()"><i class="fa-solid fa-right-to-bracket"></i><span>SignUp</span></a>
+        <div th:if="${#authorization.expression('isAuthenticated()')}" style="display: flex;">
+            <div class="user">
+                <p th:text="${#strings.toUpperCase(#authentication.name)}"></p>
+            </div>
+            <div class="login">
+                <a href="http://localhost:8080/smartContactManager/logout"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
+            </div>
         </div>
-        <div class="login">
-            <a href="http://localhost:8080/smartContactManager/home/login" onclick="redirectToLogin()"><i class="fa-solid fa-sign-in-alt"></i><span>LogIn</span></a>
+        <div th:unless= "${#authorization.expression('isAuthenticated()')}" style="display: flex;">
+            <div class="signup">
+                <a href="http://localhost:8080/smartContactManager/home/signup"><i class="fa-solid fa-right-to-bracket"></i><span>SignUp</span></a>
+            </div>
+            <div class="login">
+                <a href="http://localhost:8080/smartContactManager/home/login" ><i class="fa-solid fa-sign-in-alt"></i><span>LogIn</span></a>
+            </div>
         </div>
+        
     </nav>   
 
     <nav class="vertical">
         <ul class="nav-link">
-            <li><a href="http://localhost:8080/smartContactManager/home"><i class="fas fa-home"></i><span>Home</span></a></li>
-            <li><a href="http://localhost:8080/addTask"><i class="fas fa-plus-circle"></i> <span>Add Contact</span></a></li>
-            <li><a href="http://localhost:8080/stickywall"><i class="fas fa-sticky-note"></i> <span>Sticky Wall</span></a></li>
-            <li><a href="http://localhost:8080/smartContactManager/about"><i class="fas fa-info-circle"></i><span>About</span></a></li>
+            <li><a th:href= "@{/home}"><i class="fas fa-home"></i><span>Home</span></a></li>
+            <li><a href="#"><i class="fas fa-address-book"></i><span>View Contact</span></a></li>
+            <li><a  th:href= "@{/user/addContact}"><i class="fas fa-plus-circle"></i> <span>Add Contact</span></a></li>
+            <li><a th:href= "@{/user/dashboard}"><i class="fas fa-tachometer-alt "></i> <span>DashBoard</span></a></li>
+            <li><a th:href= "@{#}"><i class="fas fa-user-circle"></i><span>Your Profile</span></a></li>
+            <li><a th:href= "@{/logout}"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a></li>
         </ul>
     </nav>
-    <div class="main-content" style="margin-bottom: 20px;">
-        <div class="alert">
-            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-            <strong>Danger!</strong> Indicates a dangerous or potentially negative action.
-          </div>
+    <div class="main-content">
     </div> 
     
     <script th:src="@{/js/script.js}"></script>

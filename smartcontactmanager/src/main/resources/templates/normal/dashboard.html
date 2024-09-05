@@ -1,11 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
 </head>
 <body>
- <h1>This is dashboard</h1>   
+    <nav th:replace= "~{normal/navbar2 :: navbar2(${title}) }"></nav>
+    <div class="main-content">
+        <h1>This is dashboard</h1>   
+        <p>UserName: <span th:text="${user.username}"></span> </p>
+        <p>Email: <span th:text="${user.email}"></span></p>
+    </div>
+
+ 
 </body>
 </html>

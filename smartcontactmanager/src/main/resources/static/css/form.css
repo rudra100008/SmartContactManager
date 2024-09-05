@@ -1,0 +1,102 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #89CFF0, #e0f7fa);
+}
+
+.container {
+    margin: 20px auto;
+    background: linear-gradient(135deg, #ffffff 0%, #f0f4f8 100%);
+    border-radius: 12px;
+    box-shadow: 0px 15px 35px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    max-width: 600px;
+    position: relative;
+}
+
+.form-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-label {
+    display: block;
+    font-weight: 600;
+    color: #555555;
+    margin-left: 20px;
+    margin-bottom: 5px;
+}
+
+.form-control{
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    padding-left: 40px;
+    margin-left: 20px;
+    font-size: 16px;
+    width: 80%;
+}
+
+.form-control-file::-webkit-file-upload-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    margin-left: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.form-control-file::-webkit-file-upload-button:hover {
+    background-color: #0056b3;
+}
+
+.form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.25);
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    width: 200px;
+    font-size: 16px;
+    margin:20px  210px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s transform 0.1s ease-in-out;
+}
+
+.btn:hover {
+    transform: scale(1.1);
+    background-color: #0056b3;
+    color: white;
+}
+.input-container {
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.input-icon {
+    position: absolute;
+    top: 50%;
+    left: 30px;
+    transform: translateY(-50%);
+    color: #aaa; /* Adjust color as needed */
+    font-size: 18px; /* Adjust size as needed */
+}
+

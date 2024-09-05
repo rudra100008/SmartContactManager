@@ -81,7 +81,7 @@ nav.vertical {
     position: fixed;
     top: 80px;
     left: 0;
-    z-index: 900;
+    z-index: 1000;
     transition: width 0.3s ease-in-out;
     /* box-shadow: 4px 0 6px rgba(0, 0, 0, 0.1);  */
 }
@@ -204,11 +204,12 @@ nav.vertical.open .nav-link i {
 /* Main Content Adjustments */
 .main-content {
     margin-left: 200px;
-    padding: 20px;
+    margin-top: 0px;
+    padding: 5px;
     transition: margin-left 0.3s ease-in-out;
 }
-nav.vertical.open ~ .container .main-content {
-    margin-left: 60px;
+body.navbar-open .main-content {
+    margin-left: 100px;
 }
 
 /* SignUp Button Styles */
@@ -312,3 +313,21 @@ nav.vertical.open ~ .container .main-content {
   .closebtn:hover {
     color: black;
   }
+  .user {
+    font-weight: bold;
+    margin-right: 40px;
+    padding: 12px 20px;
+    background-color: #f0f4f8; /* Light background for better visibility */
+    border-radius: 20px; /* Rounded corners for a smoother look */
+    color: #333; /* Darker text color for contrast */
+    display: flex;
+    align-items: center; /* Vertically centers the text */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.user p {
+    margin: 0;
+    padding: 0;
+}
+
+

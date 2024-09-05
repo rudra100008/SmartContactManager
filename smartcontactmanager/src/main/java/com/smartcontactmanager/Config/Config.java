@@ -46,7 +46,17 @@ public class Config {
             )
             .formLogin(form -> form
                 .loginPage("/home/login") // Specifies custom login page URL
+                .loginProcessingUrl("/doLogin")
+                .defaultSuccessUrl("/user/dashboard", true)
+                .failureUrl("/home/login")
                 .permitAll() // Allows access to the login page for all users (including unauthenticated)
+            )
+            
+            .logout(logout->logout
+            .logoutUrl("/logout") //url to logout
+            .logoutSuccessUrl("/home/login?logout") // after successfull logout redirect page url
+            .invalidateHttpSession(true)
+            .deleteCookies("JSESSIONID")
             )
             .csrf(csrf -> csrf.disable()); // Disables CSRF protection (useful for development; enable in production)
 

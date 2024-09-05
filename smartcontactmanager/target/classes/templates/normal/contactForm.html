@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Form</title>
+    <link rel="stylesheet" th:href="@{/css/form.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <nav th:replace="~{normal/navbar2 :: navbar2(${title})}"></nav>
+    <div class="main-content">
+        <div class="container">
+            <form th:action="@{/user/addContact}" method="post" th:object="${contact}" enctype="multipart/form-data">
+                <h2 class="form-title">Contact Information</h2>
+                <div class="form-group">
+                    <label for="contactname" class="form-label">Name:</label>
+                    <div class="input-container">
+                        <i class="fas fa-user input-icon"></i>
+                        <input 
+                            type="text"
+                            class="form-control"
+                            id="contactname"
+                            th:field="*{contactname}"
+                            th:value="${contact.contactname}"
+                            placeholder="Enter name"
+                            required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="work" class="form-label">Work:</label>
+                    <div class="input-container">
+                        <i class="fas fa-briefcase input-icon"></i>
+                        <input 
+                            type="text"
+                            class="form-control"
+                            id="work"
+                            th:field="*{work}"
+                            th:value="${contact.work}"
+                            placeholder="Enter your work"
+                            required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="email" class="form-label">Email:</label>
+                    <div class="input-container">
+                        <i class="fas fa-envelope input-icon"></i>
+                        <input 
+                            type="email"
+                            class="form-control"
+                            id="email"
+                            th:field="*{email}"
+                            th:value="${contact.email}"
+                            placeholder="Enter email"
+                            required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="phonenumber" class="form-label">Phone Number:</label>
+                    <div class="input-container">
+                        <i class="fas fa-phone input-icon"></i>
+                        <input 
+                            type="text"
+                            class="form-control"
+                            id="phonenumber"
+                            th:field="*{phonenumber}"
+                            th:value="${contact.phonenumber}"
+                            placeholder="Enter Phone Number"
+                            required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="description" class="form-label">Description:</label>
+                    <div class="input-container">
+                        <i class="fas fa-align-left input-icon"></i>
+                        <textarea 
+                            class="form-control"
+                            id="description"
+                            th:field="*{description}"
+                            placeholder="Enter description"
+                            rows="4"
+                            required></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="image" class="form-label">Profile Image:</label>
+                    <input 
+                        type="file"
+                        class="form-control-file"
+                        id="image"
+                        th:field="*{image}">
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

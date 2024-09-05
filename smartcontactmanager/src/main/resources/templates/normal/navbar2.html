@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org" th:fragment="navbar(title)">
+<html lang="en" xmlns:th="https://www.thymeleaf.org" th:fragment="navbar2(title)">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,7 +16,7 @@
         </div>
         <div th:if="${#authorization.expression('isAuthenticated()')}" style="display: flex;">
             <div class="user">
-                <p th:text="${#strings.toUpperCase(#authentication.name)}"></p>
+                <p th:text="${#strings.toUpperCase(user.username)}"></p>
             </div>
             <div class="login">
                 <a href="http://localhost:8080/smartContactManager/logout"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
@@ -24,13 +24,12 @@
         </div>
         <div th:unless= "${#authorization.expression('isAuthenticated()')}" style="display: flex;">
             <div class="signup">
-                <a href="http://localhost:8080/smartContactManager/home/signup"><i class="fa-solid fa-right-to-bracket"></i><span>SignUp</span></a>
+                <a href="http://localhost:8080/smartContactManager/home/signup" ><i class="fa-solid fa-right-to-bracket"></i><span>SignUp</span></a>
             </div>
             <div class="login">
-                <a href="http://localhost:8080/smartContactManager/home/login" ><i class="fa-solid fa-sign-in-alt"></i><span>LogIn</span></a>
+                <a href="http://localhost:8080/smartContactManager/home/login"><i class="fa-solid fa-sign-in-alt"></i><span>LogIn</span></a>
             </div>
         </div>
-        
     </nav>   
 
     <nav class="vertical">
@@ -43,7 +42,7 @@
             <li><a th:href= "@{/logout}"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a></li>
         </ul>
     </nav>
-    <div class="main-content">
+    <div class="main-content" >
     </div> 
     
     <script th:src="@{/js/script.js}"></script>
