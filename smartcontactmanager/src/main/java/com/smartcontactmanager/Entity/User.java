@@ -36,7 +36,7 @@ public class User {
     private String imageUrl;
     @Column(length = 500)
     private String about;
-    //one user can many contacts
+    //one user can have  many contacts
     //cascade all contact to one user
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "user")
     private List<Contact> contact =new ArrayList<Contact>();

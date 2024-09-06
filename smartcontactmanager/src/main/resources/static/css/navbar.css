@@ -36,6 +36,8 @@ nav.horizontal {
     border-radius: 12px;
     text-transform: uppercase;
     letter-spacing: 1px;
+    display: inline-block;
+    white-space: nowrap; 
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
@@ -87,7 +89,7 @@ nav.vertical {
 }
 
 nav.vertical.open {
-    width: 60px;
+    width: 50px;
 }
 nav.vertical.open .nav-link span {
     display: none;

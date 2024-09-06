@@ -1,10 +1,8 @@
 package com.smartcontactmanager.Controller;
 
-import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,6 +34,7 @@ public class HomeController {
     @GetMapping("/home")
     public String homeHandler(Model model)
     {
+        model.addAttribute("title", " SmartContact Manager");
         return "index";
     }
     @GetMapping("/about")
