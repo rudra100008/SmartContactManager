@@ -4,6 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
+    <style>
+        .photo{
+            border-radius: 50%;
+            width: 100px;
+            transition: transform 3s ease-in;
+        }
+        .photo:hover{
+            transform: rotate(360deg);
+        }
+    </style>
 </head>
 <body>
     <nav th:replace= "~{normal/navbar2 :: navbar2(${title}) }"></nav>
@@ -11,6 +21,11 @@
         <h1>This is dashboard</h1>   
         <p>UserName: <span th:text="${user.username}"></span> </p>
         <p>Email: <span th:text="${user.email}"></span></p>
+        <div th:each="contact : ${contact}">
+            <p>Contact Name: <span th:text="${contact.contactname}"></span></p>
+            <p>Email: <span th:text="${contact.email}"></span></p>
+            <img th:src="@{/images/{image}(image=${contact.image})}" class="photo" alt="Contact Image" />
+        </div>
     </div>
 
  
