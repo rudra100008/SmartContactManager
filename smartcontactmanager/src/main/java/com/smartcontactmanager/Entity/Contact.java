@@ -7,6 +7,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "Contact")
@@ -14,8 +16,11 @@ public class Contact {
     @Id
     @GeneratedValue( strategy = GenerationType.AUTO)
     private int cid;
+    @NotBlank(message = " Contact Name is required!!")
     private String contactname;
     private String work;
+    @NotBlank(message = "Email is required!!")
+    @Email
     private String email;
     private String phonenumber;
     private String image;

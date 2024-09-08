@@ -10,6 +10,7 @@ import java.security.Principal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,8 +19,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import com.smartcontactmanager.Entity.Contact;
 import com.smartcontactmanager.Entity.User;
+import com.smartcontactmanager.Helper.Message;
 import com.smartcontactmanager.Services.ContactServices;
 import com.smartcontactmanager.Services.UserServices;
+
+import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
+
 import java.util.*;
 
 @Controller
@@ -47,51 +53,64 @@ public class UserController {
         model.addAttribute("title", "DashBoard");
         String username=principal.getName();
         User user=userServices.findUserByUsername(username);
-        List<Contact> contact=this.contactServices.getContactsByUser(user);
-        model.addAttribute("contact", contact);
+        List<Contact> contacts=this.contactServices.getContactsByUser(user);
+        model.addAttribute("contacts", contacts);
         return "normal/dashboard";
     } 
     
     @GetMapping("/addContact")
-    public String contactFormHandler(Model model)
+    public String contactFormHandler(Model model,HttpSession session)
     {
         model.addAttribute("title", "addContact");
         model.addAttribute("contact", new Contact());
+        Message message=(Message)session.getAttribute("message");
+        if (message !=null) {
+            model.addAttribute("message",message);
+            session.removeAttribute("message");
+        }
         return "normal/contactForm";
     }
     @PostMapping("/addContact")
-public String formProcessing(@ModelAttribute("contact") Contact contact,
+    public String formProcessing(@Valid @ModelAttribute("contact") Contact contact,
+                             BindingResult result,
                              @RequestParam("profileImage") MultipartFile imageFile,
                              Model model,
-                             Principal principal) {
+                             Principal principal,
+                             HttpSession session) {
     try {
         model.addAttribute("title", "addContact");
         model.addAttribute("contact", contact);
         String username = principal.getName();
         User user = this.userServices.findUserByUsername(username);
-        if (!imageFile.isEmpty()) {
+        if (result.hasErrors()) {
+            model.addAttribute("contact", contact);
+        }
+        if (!imageFile.isEmpty() && contact !=null) {
             String uploadDir = "src/main/resources/static/images/";
             File uploadDirFile = new File(uploadDir);
             if (!uploadDirFile.exists()) {
-                uploadDirFile.mkdirs(); // Create directory if it does not exist
+                uploadDirFile.mkdirs(); 
             }
             String fileName = imageFile.getOriginalFilename();
             Path path = Paths.get(uploadDir + fileName); // File path
             Files.copy(imageFile.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+            model.addAttribute("contact",contact);
             contact.setImage(fileName);
         } else {
             contact.setImage(null);
+            model.addAttribute("contact",contact);
         }
-
         contact.setUser(user);
         user.getContacts().add(contact);
         this.userServices.saveUser(user);
+        session.setAttribute("message", new Message("Contact is registred", "alert-success"));
+        return "normal/contactForm";
 
     } catch (Exception e) {
         e.printStackTrace();
+        session.setAttribute("message", new Message("Something went wrong: "+e.getLocalizedMessage(), "alert-danger"));
+        return "normal/contactForm";
     }
-
-    return "normal/dashboard";
 }
 
 }

@@ -23,14 +23,14 @@
 </head>
 <body>
     <!--This is alert message-->
-    <div class="alert" 
-         th:if="${session.message}" 
-         th:classappend="${session.message.type}" >
-         <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-        <strong th:text="${session.message.type == ' alert-danger' ? 'Error!' : 'Success!'}"></strong>
-        <p th:text="${session.message.content}"></p>
-        
-    </div>
+    <div class="alert"
+    th:if="${session.message}"
+    th:classappend="${session.message.type}">
+     <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+     <strong th:text="${session.message.type == 'alert-danger' ? 'Error!!' : 'Success!!'}"></strong>
+     <span th:text="${session.message.content}"></span>
+   </div>
+
     <div class="signup-container">
         <a class="close-button" th:href="@{/home}">&times;</a>
         <h3 class="login-header">Create Your Account</h3>

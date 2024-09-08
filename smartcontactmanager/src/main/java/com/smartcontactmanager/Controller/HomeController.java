@@ -94,9 +94,6 @@ public String signUpHandler(@Valid @ModelAttribute("user") User user,
         if (!isAgreed) {
             throw new Exception("You have not agreed to the terms and conditions");
         }
-        
-       
-       
         System.out.println("RawPassword: "+user.getPassword());
         // Encode password and save user
         user.setPassword(passwordEncoder.encode(rawPassword));
@@ -107,7 +104,7 @@ public String signUpHandler(@Valid @ModelAttribute("user") User user,
         this.userServices.saveUser(user);
         
         session.setAttribute("message", new Message("Successfully registered", "alert-success"));
-        response.setHeader("refresh", "3; URL=/smartContactManager/home/login"); // 3 sec delay before redirecting
+        response.setHeader("refresh", "3; URL=/smartContactManager/home/login"); 
         return "signup";
     } catch (DataIntegrityViolationException e) {
         session.setAttribute("message", new Message("The email or username is already in use. Please choose another.", "alert-danger"));

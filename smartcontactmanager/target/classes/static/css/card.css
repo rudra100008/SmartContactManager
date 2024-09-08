@@ -1,0 +1,77 @@
+/* Global styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(100deg, #89CFF0, #e0f7fa);
+}
+
+h1, h3,h2 {
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Main content */
+.main-content {
+    padding: 20px;
+}
+
+/* Contact card styling (horizontal design) */
+.contact-card {
+    background-color: white;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    max-width: 800px;
+    margin: 20px auto;
+}
+
+.contact-card:hover {
+    transform: translateY(-5px);
+    transition: transform 0.3s;
+}
+
+/* Contact image in card */
+.contact-card img {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    margin-right: 20px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.contact-card img:hover {
+    transform: scale(1.1);
+}
+
+/* Contact text details */
+.contact-details h3 {
+    margin: 10px 0;
+    color: #333;
+}
+
+.contact-details p {
+    color: #555;
+    margin: 5px 0;
+}
+
+.contact-details p span {
+    font-weight: bold;
+}
+
+/* Ensure responsiveness */
+@media (max-width: 768px) {
+    .contact-card {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    .contact-card img {
+        margin-bottom: 10px;
+    }
+}

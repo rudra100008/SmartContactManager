@@ -4,27 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
-    <style>
-        .photo{
-            border-radius: 50%;
-            width: 100px;
-            transition: transform 3s ease-in;
-        }
-        .photo:hover{
-            transform: rotate(360deg);
-        }
-    </style>
+    <link rel="stylesheet" th:href="@{/css/card.css}">
 </head>
 <body>
     <nav th:replace= "~{normal/navbar2 :: navbar2(${title}) }"></nav>
     <div class="main-content">
-        <h1>This is dashboard</h1>   
-        <p>UserName: <span th:text="${user.username}"></span> </p>
-        <p>Email: <span th:text="${user.email}"></span></p>
-        <div th:each="contact : ${contact}">
-            <p>Contact Name: <span th:text="${contact.contactname}"></span></p>
-            <p>Email: <span th:text="${contact.email}"></span></p>
-            <img th:src="@{/images/{image}(image=${contact.image})}" class="photo" alt="Contact Image" />
+        <!-- Contact Cards Section -->
+        <h2> Contacts</h3>
+        <div>
+            <!-- Iterate over the contacts and display them as horizontal cards -->
+            <div th:each="contact : ${contacts}" class="contact-card">
+                <!-- Contact Image -->
+                <div>
+                    <img th:src="@{/images/{image}(image=${contact.image})}" alt="Contact Image" />
+                </div>
+
+                <!-- Contact Details -->
+                <div class="contact-details">
+                    <h3 ><span>Name:</span><span th:text="${contact.contactname}"></span></h5>
+                    <p><span>Work:</span> <span th:text="${contact.work}">Work</span></p>
+                    <p><span>Email:</span> <span th:text="${contact.email}">Email</span></p>
+                    <p><span>Phone:</span> <span th:text="${contact.phonenumber}">Phone Number</span></p>
+                </div>
+            </div>
         </div>
     </div>
 

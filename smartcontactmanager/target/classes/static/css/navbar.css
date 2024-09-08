@@ -21,7 +21,7 @@ nav.horizontal {
     left: 0;
     width: 100vw;
     height: 60px;
-    z-index: 1000;
+    z-index:  99999;
     /* box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);  */
     transition: left 0.3s ease-in-out, width 0.3s ease-in-out;
 }
@@ -83,7 +83,7 @@ nav.vertical {
     position: fixed;
     top: 80px;
     left: 0;
-    z-index: 1000;
+    z-index:  99999;
     transition: width 0.3s ease-in-out;
     /* box-shadow: 4px 0 6px rgba(0, 0, 0, 0.1);  */
 }
@@ -295,11 +295,7 @@ body.navbar-open .main-content {
 .login a:hover {
     color: inherit;
 }
-.alert {
-    padding: 20px;
-    background-color: #f44336;
-    color: white;
-  }
+
   
   .closebtn {
     margin-left: 15px;
