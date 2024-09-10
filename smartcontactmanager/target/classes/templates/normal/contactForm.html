@@ -33,6 +33,7 @@
                             th:classappend="${#fields.hasErrors('contactname')?'is-invalid':''}"
                             placeholder="Enter name"
                             required>
+                            <i class="fas fa-exclamation-triangle exclamation" th:if="${#fields.hasErrors('contactname')}"></i>
                     </div>
                     <p class="invalid-feedback" th:each=" e: ${#fields.errors('contactname')}" th:text="${e}"></p>
                 </div>
@@ -63,6 +64,7 @@
                             th:classappend="${#fields.hasErrors('email')?'is-invalid':''}"
                             placeholder="Enter email"
                             required>
+                            <i class="fas fa-exclamation-triangle exclamation" th:if="${#fields.hasErrors('email')}"></i>
                     </div>
                     <p th:each=" e: ${#fields.errors('email')}" th:text="${e}" class="invalid-feedback"></p>
                 </div>
