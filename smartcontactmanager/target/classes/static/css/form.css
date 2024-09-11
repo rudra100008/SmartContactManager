@@ -154,7 +154,7 @@ body {
     top: 50%;
     right: 60px;
     transform: translateY(-50%);
-    color: #dc3545; /* Adjust color as needed */
+    color: #dc3545; 
     font-size: 18px;
 }
 

@@ -1,5 +1,6 @@
 package com.smartcontactmanager.Services;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,4 +21,5 @@ public class UserServices {
     {
         return this.userDao.findByUsername(name);
     }
+   
 }

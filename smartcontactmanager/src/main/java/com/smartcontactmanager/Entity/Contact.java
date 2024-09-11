@@ -9,6 +9,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "Contact")
@@ -22,6 +23,7 @@ public class Contact {
     @NotBlank(message = "Email is required!!")
     @Email
     private String email;
+    @Size(min=10,max = 10,message = "10 numbers is required for phone number")
     private String phonenumber;
     private String image;
     @ManyToOne

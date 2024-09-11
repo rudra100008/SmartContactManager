@@ -1,35 +1,42 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Contacts</title>
     <link rel="stylesheet" th:href="@{/css/card.css}">
 </head>
 <body>
-    <nav th:replace= "~{normal/navbar2 :: navbar2(${title}) }"></nav>
+    <nav th:replace="~{normal/navbar2 :: navbar2(${title})}"></nav>
     <div class="main-content">
         <!-- Contact Cards Section -->
-        <h2> Contacts</h3>
+        <h2>Contacts</h2>
         <div>
-            <!-- Iterate over the contacts and display them as horizontal cards -->
-            <div th:each="contact : ${contacts}" class="contact-card">
-                <!-- Contact Image -->
-                <div>
-                    <img th:src="@{/images/{image}(image=${contact.image})}" alt="Contact Image" />
+            <div  th:if="${contacts != null and !#lists.isEmpty(contacts)}">
+                <div  th:each="contact : ${contacts}" class="contact-card">
+                    <!-- Contact Image -->
+                    <div>
+                        <img th:src="@{/images/{image}(image=${contact.image})}" alt="Contact Image" />
+                    </div>
+                    <!-- Contact Details -->
+                    <div class="contact-details">
+                        <h3><span>Name:</span><span th:text="${contact.contactname}"></span></h3>
+                        <p><span>Work:</span> <span th:text="${contact.work}">Work</span></p>
+                        <p><span>Email:</span> <span th:text="${contact.email}">Email</span></p>
+                        <p><span>Phone:</span> <span th:text="${contact.phonenumber}">Phone Number</span></p>
+                    </div>
+                    <div class="icons">
+                       <a th:href= "@{'/user/update/'+${contact.cid}}"><i class="fa-solid fa-pen-to-square edit"></i></a>
+                       <a th:href="@{'/user/delete/'+${contact.cid}}"><i class="fa-solid fa-trash delete"></i></a> 
+                    </div>
                 </div>
-
-                <!-- Contact Details -->
-                <div class="contact-details">
-                    <h3 ><span>Name:</span><span th:text="${contact.contactname}"></span></h5>
-                    <p><span>Work:</span> <span th:text="${contact.work}">Work</span></p>
-                    <p><span>Email:</span> <span th:text="${contact.email}">Email</span></p>
-                    <p><span>Phone:</span> <span th:text="${contact.phonenumber}">Phone Number</span></p>
+            </div>
+            <div th:unless="${contacts != null and !#lists.isEmpty(contacts)}">
+                <div class="contact-card">
+                    <h1 style="margin-left: 20px;color: blue;font-weight: bolder;">No Contacts Available!!</h1>
                 </div>
             </div>
         </div>
     </div>
-
- 
 </body>
 </html>

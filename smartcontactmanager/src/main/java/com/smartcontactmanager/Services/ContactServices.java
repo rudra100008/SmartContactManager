@@ -20,6 +20,18 @@ public class ContactServices {
 
     public List<Contact> getContactsByUser(User user) {
     return contactDao.findByUser(user);  
-}
+    }
+    public void deleteByID(int id)
+    {
+        this.contactDao.deleteById(id);;
+    }
+    public Contact findByIdContact(int id)
+    {
+        return this.contactDao.findById(id).orElse(null);
+    }
+    public void updateContact(Contact contact)
+    {
+        this.contactDao.save(contact);
+    }
     
 }

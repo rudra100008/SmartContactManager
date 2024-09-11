@@ -47,7 +47,7 @@ public class Config {
             .formLogin(form -> form
                 .loginPage("/home/login") // Specifies custom login page URL
                 .loginProcessingUrl("/doLogin")
-                .defaultSuccessUrl("/user/dashboard", true)
+                .defaultSuccessUrl("/user/viewContact", true)
                 .failureUrl("/home/login")
                 .permitAll() // Allows access to the login page for all users (including unauthenticated)
             )

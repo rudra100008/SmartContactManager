@@ -78,9 +78,12 @@
                             id="phonenumber"
                             th:field="*{phonenumber}"
                             th:value="${contact.phonenumber}"
+                            th:classappend="${#fields.hasErrors('phonenumber')?'is-invalid':''}"
                             placeholder="Enter Phone Number"
                             required>
+                            <i class="fas fa-exclamation-triangle exclamation" th:if="${#fields.hasErrors('phonenumber')}"></i>
                     </div>
+                    <p th:each=" e: ${#fields.errors('phonenumber')}" th:text="${e}" class="invalid-feedback"></p>
                 </div>
                 <div class="formgroup ">
                     <label for="description" class="formlabel">Description:</label>
