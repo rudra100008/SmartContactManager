@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="https://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/contactDetails.css}">
+    <title>Profile</title>
+</head>
+
+<body>
+    <section th:replace="~{normal/navbar2 :: navbar2(${title}) }"></section>
+    <div class="main-content">
+        <div class="container">
+            <div class="card-header">
+                Profile
+            </div>
+            <div class="card-body">
+                <div class="profile-img">
+                    <!-- Image -->
+                    <img th:src="@{/images/user/{image}(image=${user.imageUrl})}" alt="User Image">
+                </div>
+                <div class="profile-card">
+                    <ul class="profile-info">
+                        <li>
+                            <strong>Name</strong>
+                            <span th:text="${user.username}"></span>
+                        </li>
+                        <li>
+                            <strong>Email</strong>
+                            <span th:text="${user.email}"></span>
+                        </li>
+                        <li>
+                            <strong>Position</strong>
+                            <span th:text="${user.position}"></span>
+                        </li>
+                        <li>
+                            <strong>Description</strong>
+                            <span th:text="${user.about}"></span>
+                        </li>  
+                    </ul>
+                    <!-- <a th:href="@{'/user/update/'+${contact.cid}}" class="edit-btn">Edit</a> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

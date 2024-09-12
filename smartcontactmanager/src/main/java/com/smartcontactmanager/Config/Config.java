@@ -45,16 +45,16 @@ public class Config {
                 .requestMatchers("/**").permitAll() // Allows access to all other URLs without authentication
             )
             .formLogin(form -> form
-                .loginPage("/home/login") // Specifies custom login page URL
+                .loginPage("/home/login") 
                 .loginProcessingUrl("/doLogin")
-                .defaultSuccessUrl("/user/viewContact", true)
-                .failureUrl("/home/login")
+                .defaultSuccessUrl("/user/viewContact/0", true)
+                .failureUrl("/home/login?error")
                 .permitAll() // Allows access to the login page for all users (including unauthenticated)
             )
             
             .logout(logout->logout
             .logoutUrl("/logout") //url to logout
-            .logoutSuccessUrl("/home/login?logout") // after successfull logout redirect page url
+            .logoutSuccessUrl("/home/login?logout")
             .invalidateHttpSession(true)
             .deleteCookies("JSESSIONID")
             )

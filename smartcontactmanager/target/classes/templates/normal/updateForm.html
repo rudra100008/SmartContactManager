@@ -18,13 +18,13 @@
             <span th:text="${session.message.content}"></span>
         </div>
         <div class="container-form">
-            <form novalidate th:action="@{/user/addContact}" method="post" th:object="${contact}"
+            <form novalidate th:action="@{/user/update}" method="post" th:object="${contact}"
                 enctype="multipart/form-data">
                 <h2 class="form-title">Contact Information</h2>
-                <div class="formgroup" th:field="*{cid}" id="cid" th:value="${contact.cid}">
+                <div class="formgroup" >
                     <input type="text" class="formcontrol" th:field="*{cid}" id="cid" th:value="${contact.cid}" hidden>
                 </div>
-                <div class="formgroup" th:field="*{user}" id="user" th:value="${contact.user}">
+                <div class="formgroup" >
                     <input type="text" class="formcontrol" th:field="*{user}" id="user" th:value="${contact.user}"
                         hidden>
                 </div>

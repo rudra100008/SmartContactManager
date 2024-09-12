@@ -113,3 +113,120 @@ h1, h3,h2 {
         right: 10px;
     }
 }
+.pagination-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+    font-size: 18px;
+}
+
+.arrow {
+    display: inline-block;
+    padding: 10px;
+    margin: 0 10px;
+    cursor: pointer;
+    position:fixed;
+    transform: translateY(-50%);
+    top: 50%;
+    background-color: #007bff;
+    color: white;
+    border-radius: 50%;
+    font-size: 30px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.arrow:hover {
+    background-color: #0056b3;
+}
+
+.arrow.left {
+   right: auto;
+  
+}
+
+.arrow.right {
+    left:1300px;
+}
+
+.page-number {
+    text-align: center;
+    margin-top: 20px; /* Space above the pagination */
+}
+
+.page-number a {
+    display: inline-block;
+    text-align: center;
+    font-weight: bold;
+    width: 30px; 
+    height: 30px; 
+    font-size: 16px; 
+    color: #333;
+    line-height: 30px; 
+    margin: 0 5px; 
+    padding: 0; 
+    background-color: #f0f0f0; 
+    border-radius: 50%;
+    text-decoration: none; 
+    transition: background-color 0.3s ease-in-out, transform 0.3s;
+}
+.page-number a:hover {
+    background-color: black;
+    color: #fff;
+    transform: scale(1.2);
+}
+.page-number.active {
+    background-color: green; 
+    color: #fff; 
+    transform: scale(1.2); 
+}
+.no-contacts {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60vh; /* Adjust height as needed */
+    text-align: center;
+    margin-top: 20px;
+}
+
+.no-contacts-content {
+    background-color: #f8d7da; /* Light red background for the alert */
+    color: #721c24; /* Dark red color for the text */
+    border: 1px solid #f5c6cb; /* Light red border */
+    border-radius: 5px;
+    padding: 20px;
+    max-width: 500px;
+    width: 100%;
+}
+
+.no-contacts-icon {
+    font-size: 3rem; /* Adjust size as needed */
+    margin-bottom: 10px;
+}
+
+.no-contacts h1 {
+    font-size: 2rem;
+    margin: 0;
+}
+
+.no-contacts p {
+    font-size: 1.2rem;
+    margin: 0;
+}
+.no-contacts a {
+    color: #007bff; /* Blue color for the link */
+    text-decoration: none; /* Remove underline */
+    font-weight: bold;
+}
+
+.no-contacts a:hover {
+    text-decoration: underline; /* Add underline on hover */
+}
+ul{
+    list-style-type: none;
+}
+
+
+
+

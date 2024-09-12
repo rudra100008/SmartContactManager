@@ -1,0 +1,108 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #89CFF0, #e0f7fa);
+}
+
+.main-content {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.container {
+    border-radius: 12px;
+    max-width: 700px;
+    width: 100%;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+    background-color: #00796b;
+    color: #ffffff;
+    padding: 15px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    border-bottom: 4px solid #004d40;
+}
+
+.card-body {
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.profile-img img {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid #004d40;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
+}
+
+.profile-card {
+    background-color: #ffffff;
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.profile-info {
+    list-style-type: none;
+    padding: 0;
+}
+
+.profile-info li {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.profile-info li:last-child {
+    border-bottom: none;
+}
+
+.profile-info strong {
+    color: #004d40;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.profile-info span {
+    color: #333;
+    font-size: 16px;
+}
+
+.edit-btn {
+    display: inline-block;
+    width: 120px;
+    padding: 12px 18px;
+    background-color: #004d40;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.edit-btn:hover {
+    background-color: #00796b;
+    transform: translateY(-2px);
+}
+
+.edit-btn:active {
+    background-color: #004d40;
+    transform: translateY(0);
+}

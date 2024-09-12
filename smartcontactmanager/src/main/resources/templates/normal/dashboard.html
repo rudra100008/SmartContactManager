@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contacts</title>
     <link rel="stylesheet" th:href="@{/css/card.css}">
 </head>
+
 <body>
     <nav th:replace="~{normal/navbar2 :: navbar2(${title})}"></nav>
     <div class="main-content">
         <!-- Contact Cards Section -->
-        <h2>Contacts</h2>
         <div>
-            <div  th:if="${contacts != null and !#lists.isEmpty(contacts)}">
-                <div  th:each="contact : ${contacts}" class="contact-card">
+            <!-- Section to display contacts if they exist -->
+            <div th:if="${contacts != null and !#lists.isEmpty(contacts)}">
+                <h2>Contacts</h2>
+                <div th:each="contact : ${contacts}" class="contact-card">
                     <!-- Contact Image -->
                     <div>
                         <img th:src="@{/images/{image}(image=${contact.image})}" alt="Contact Image" />
@@ -21,22 +24,49 @@
                     <!-- Contact Details -->
                     <div class="contact-details">
                         <h3><span>Name:</span><span th:text="${contact.contactname}"></span></h3>
-                        <p><span>Work:</span> <span th:text="${contact.work}">Work</span></p>
-                        <p><span>Email:</span> <span th:text="${contact.email}">Email</span></p>
+                        <p><span>Email:</span><a th:href="@{'/user/contactDetails/'+${contact.cid}}"><span
+                                    th:text="${contact.email}">Email</span></a></p>
                         <p><span>Phone:</span> <span th:text="${contact.phonenumber}">Phone Number</span></p>
                     </div>
                     <div class="icons">
-                       <a th:href= "@{'/user/update/'+${contact.cid}}"><i class="fa-solid fa-pen-to-square edit"></i></a>
-                       <a th:href="@{'/user/delete/'+${contact.cid}}"><i class="fa-solid fa-trash delete"></i></a> 
+                        <a th:href="@{'/user/update/'+${contact.cid}}"><i
+                                class="fa-solid fa-pen-to-square edit"></i></a>
+                        <a th:href="@{'/user/delete/'+${contact.cid}}"><i class="fa-solid fa-trash delete"></i></a>
                     </div>
                 </div>
             </div>
-            <div th:unless="${contacts != null and !#lists.isEmpty(contacts)}">
-                <div class="contact-card">
-                    <h1 style="margin-left: 20px;color: blue;font-weight: bolder;">No Contacts Available!!</h1>
+
+            <!-- Section to display message if no contacts are available -->
+            <div th:unless="${contacts != null and !#lists.isEmpty(contacts)}" class="no-contacts">
+                <div class="no-contacts-content">
+                    <i class="fa-solid fa-exclamation-circle no-contacts-icon"></i>
+                    <h1 th:text="${message1}"></h1>
+                    <p>Insert contacts from <a th:href="@{/user/addContact}">addContact</a> </p>
                 </div>
             </div>
+
+
         </div>
+        <ul th:if="${totalPage > 0}" class="pagination">
+            <!-- Previous Arrow -->
+            <li>
+                <a class="arrow left" th:if="${currentPage > 0}"
+                    th:href="@{'/user/viewContact/'+${currentPage-1}}">&#8249;</a>
+            </li>
+
+            <!-- Page Numbers -->
+            <div class="page-number">
+                <a th:each="i : ${#numbers.sequence(1, totalPage)}" th:href="@{'/user/viewContact/'+${i-1}}"
+                    th:classappend="${currentPage==i-1} ? 'page-number active' : ''" th:text="${i}"></a>
+            </div>
+
+            <!-- Next Arrow -->
+            <li>
+                <a class="arrow right" th:if="${currentPage + 1 < totalPage}"
+                    th:href="@{'/user/viewContact/'+${currentPage+1}}">&#8250;</a>
+            </li>
+        </ul>
     </div>
 </body>
+
 </html>

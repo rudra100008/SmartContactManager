@@ -76,7 +76,7 @@ nav.vertical {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    background-color: #34495E;
+    background-color:#fff;
     color: white;
     height: calc(100vh - 80px);
     width: 150px;
@@ -84,7 +84,7 @@ nav.vertical {
     top: 80px;
     left: 0;
     z-index:  99999;
-    transition: width 0.3s ease-in-out;
+    transition: width 0.3s ease-out;
     /* box-shadow: 4px 0 6px rgba(0, 0, 0, 0.1);  */
 }
 
@@ -99,18 +99,8 @@ nav.vertical.open .nav-link i {
 }
 .vertical .nav-link a i {
     margin-right: 10px;
-    transition: font-size 0.3s ease-in-out;
+    transition: font-size 0.3s ease;
 }
-
-.vertical .logo {
-    font-family: 'Pacifico', cursive;
-    font-weight: bold;
-    font-size: 22px;
-    color: #FFD93D;
-    margin-bottom: 40px;
-    text-align: center;
-}
-
 .vertical .nav-link {
     list-style-type: none;
     margin: 0;

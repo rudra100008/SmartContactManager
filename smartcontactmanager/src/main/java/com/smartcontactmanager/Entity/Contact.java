@@ -9,6 +9,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 @Entity
@@ -23,7 +24,8 @@ public class Contact {
     @NotBlank(message = "Email is required!!")
     @Email
     private String email;
-    @Size(min=10,max = 10,message = "10 numbers is required for phone number")
+    @Pattern(regexp = "^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$",message = "Enter correct format")
+    @Size(min = 10,max = 10,message = "Phone number must have 10 digit")
     private String phonenumber;
     private String image;
     @ManyToOne

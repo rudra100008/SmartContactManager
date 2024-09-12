@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="https://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/contactDetails.css}">
+    <title>ContactDetails</title>
+</head>
+
+<body>
+    <section th:replace="~{normal/navbar2 :: navbar2(${title}) }"></section>
+    <div class="main-content">
+        <div class="container">
+            <div class="card-header">
+                Contact Details
+            </div>
+            <div class="card-body">
+                <div class="profile-img">
+                    <!-- Image -->
+                    <img th:src="@{/images/{image}(image=${contact.image})}" alt="Contact Image">
+                </div>
+                <div class="profile-card">
+                    <ul class="profile-info">
+                        <li>
+                            <strong>Name</strong>
+                            <span th:text="${contact.contactname}"></span>
+                        </li>
+                        <li>
+                            <strong>Email</strong>
+                            <span th:text="${contact.email}"></span>
+                        </li>
+                        <li>
+                            <strong>Phone</strong>
+                            <span th:text="${contact.phonenumber}"></span>
+                        </li>
+                        <li>
+                            <strong>Position</strong>
+                            <span th:text="${contact.work}"></span>
+                        </li>
+                        <li>
+                            <strong>Description</strong>
+                            <span th:text="${contact.description}"></span>
+                        </li>
+                        
+                    </ul>
+                    <a th:href="@{'/user/update/'+${contact.cid}}" class="edit-btn">Edit</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -8,6 +8,8 @@ import java.nio.file.StandardCopyOption;
 import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,11 +25,8 @@ import com.smartcontactmanager.Entity.User;
 import com.smartcontactmanager.Helper.Message;
 import com.smartcontactmanager.Services.ContactServices;
 import com.smartcontactmanager.Services.UserServices;
-
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
-
-import java.util.*;
 
 @Controller
 @RequestMapping("/user")
@@ -37,24 +36,31 @@ public class UserController {
     private UserServices userServices;
     @Autowired
     private ContactServices contactServices;
-
-    // method for adding common data in UserController
     @ModelAttribute
     public void addCommonData(Model model, Principal principal) {
         String username = principal.getName();
         User user = userServices.findUserByUsername(username);
-
+        model.addAttribute("title", "Smart Contact Manager");
         model.addAttribute("user", user);
     }
 
     // http://localhost:8080/smartContactManager/user/viewContact
-    @GetMapping("/viewContact")
-    public String dashboard(Model model, Principal principal) {
+    @GetMapping("/viewContact/{page}")
+    public String dashboard(@PathVariable("page") int page,Model model, Principal principal) {
         model.addAttribute("title", "Contacts");
         String username = principal.getName();
         User user = userServices.findUserByUsername(username);
-        List<Contact> contacts = this.contactServices.getContactsByUser(user);
-        model.addAttribute("contacts", contacts);
+        PageRequest pageInfo=  PageRequest.of(page, 3);
+        Page<Contact> contacts = this.contactServices.getContactsByID(user.getId(),pageInfo);
+        if (contacts.getTotalElements()==0) {
+            model.addAttribute("message1", "No Contacts Available!!!");
+        }else{
+            model.addAttribute("contacts", contacts);
+        }
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPage", contacts.getTotalPages());
+        System.out.println(contacts);
+        System.out.println(user);
         return "normal/dashboard";
     }
 
@@ -71,59 +77,67 @@ public class UserController {
     }
 
     @PostMapping("/addContact")
-    public String formProcessing(@Valid @ModelAttribute("contact") Contact contact,
-            BindingResult result,
-            @RequestParam("profileImage") MultipartFile imageFile,
-            Model model,
-            Principal principal,
-            HttpSession session) {
-        try {
-            model.addAttribute("title", "addContact");
-            model.addAttribute("contact", contact);
-            String username = principal.getName();
-            User user = this.userServices.findUserByUsername(username);
-            if (contact != null) {
-                if (result.hasErrors()) {
-                    model.addAttribute("contact", contact);
-                    return "normal/contactForm";
-                }
-                if (!imageFile.isEmpty()) {
-                    String uploadDir = "src/main/resources/static/images/";
-                    File uploadDirFile = new File(uploadDir);
-                    if (!uploadDirFile.exists()) {
-                        uploadDirFile.mkdirs();
-                    }
-                    String fileName = imageFile.getOriginalFilename();
-                    Path path = Paths.get(uploadDir + fileName); // File path
-                    Files.copy(imageFile.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-                    model.addAttribute("contact", contact);
-                    contact.setImage(fileName);
-                } else {
-                    contact.setImage(null);
-                    model.addAttribute("contact", contact);
-                }
+public String formProcessing(@Valid @ModelAttribute("contact") Contact contact,
+        BindingResult result,
+        @RequestParam("profileImage") MultipartFile imageFile,
+        Model model,
+        Principal principal,
+        HttpSession session) {
+    try {
+        model.addAttribute("title", "addContact");
+        model.addAttribute("contact", contact);
+        String username = principal.getName();
+        User user = this.userServices.findUserByUsername(username);
 
-                contact.setUser(user);
-                user.getContacts().add(contact);
-                this.userServices.saveUser(user);
-                session.setAttribute("message", new Message("Contact is registred", "alert-success"));
-            } else {
-                throw new Exception("Insert the contact details");
+        if (contact != null) {
+            // Check if contact attributes are empty
+            if (contact.getContactname().isEmpty() || contact.getEmail().isEmpty() || contact.getPhonenumber().isEmpty()) {
+                session.setAttribute("message", new Message("Contact is not registered! Please enter required details", "alert-danger"));
+                return "normal/contactForm";
             }
-            return "normal/contactForm";
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            session.setAttribute("message",
-                    new Message("Something went wrong: " + e.getLocalizedMessage(), "alert-danger"));
-            return "normal/contactForm";
+            // Handle validation errors
+            if (result.hasErrors()) {
+                model.addAttribute("contact", contact);
+                return "normal/contactForm";
+            }
+
+            // Handle file upload
+            if (!imageFile.isEmpty()) {
+                String uploadDir = "src/main/resources/static/images/";
+                File uploadDirFile = new File(uploadDir);
+                if (!uploadDirFile.exists()) {
+                    uploadDirFile.mkdirs();
+                }
+                String fileName = imageFile.getOriginalFilename();
+                Path path = Paths.get(uploadDir + fileName); // File path
+                Files.copy(imageFile.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+                contact.setImage(fileName);
+            } else {
+                contact.setImage("contact.jpg");
+            }
+
+            contact.setUser(user);
+            user.getContacts().add(contact);
+            this.userServices.saveUser(user);
+
+            // Set success message
+            session.setAttribute("message", new Message("Contact is registered", "alert-success"));
         }
+
+        return "normal/contactForm";
+    } catch (Exception e) {
+        e.printStackTrace();
+        session.setAttribute("message", new Message("Something went wrong: " + e.getLocalizedMessage(), "alert-danger"));
+        return "normal/contactForm";
     }
+}
+
 
     @GetMapping("/delete/{cid}")
     public String deleteContact(@PathVariable("cid") int cid) {
         this.contactServices.deleteByID(cid);
-        return "redirect:/user/viewContact";
+        return "redirect:/user/viewContact/0";
     }
 
     @GetMapping("/update/{cid}")
@@ -170,12 +184,11 @@ public class UserController {
                 }
 
                 contact.setUser(user);
-                user.getContacts().removeIf(c -> c.getCid() == (contact.getCid()));
-                user.getContacts().add(contact); // Add updated contact
-                this.userServices.saveUser(user);
+                this.contactServices.updateContact(contact);
                 session.setAttribute("message", new Message("Contact is updated", "alert-success"));
+                return "redirect:/user/viewContact/0";
             }
-            return "redirect:/user/viewContact";
+            return "redirect:/user/viewContact/0";
         } catch (Exception e) {
             e.printStackTrace();
             session.setAttribute("message",
@@ -183,4 +196,12 @@ public class UserController {
             return "normal/updateForm";
         }
     }
+    @GetMapping("/contactDetails/{cid}")
+    public String contactDetailsHandler(@PathVariable("cid") int cid,Model model)
+    {
+        Contact contact =this.contactServices.findByIdContact(cid);
+        model.addAttribute("contact", contact);
+        return "normal/contactDetails";
+    }
+
 }
