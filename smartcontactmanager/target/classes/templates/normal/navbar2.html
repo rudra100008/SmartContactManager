@@ -1,49 +1,73 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org" th:fragment="navbar2(title)">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" th:href="@{/css/navbar.css}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <title th:text="${title}"></title>
+    <style>
+        /* .nav-center .search-btn {
+            position: absolute;
+            right: 280px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            color: #666;
+            font-size: 18px;
+            transition: color 0.3s ease, right 0.3s ease-in-out;
+        }
+
+        .nav-center input[type="text"]:focus+.search-btn {
+            right: 250px;
+        } */
+    </style>
 </head>
+
 <body>
     <nav class="horizontal">
         <button class="menu-toggle" onclick="toggleNavbar()"><i class="fas fa-bars"></i></button>
         <div class="logo-horizontal" th:text="${title}"></div>
-        <div class="nav-center">
-            <input type="text" placeholder="Search..." />
-        </div>
+        <form th:action="@{/home/search}" method="get" class="nav-center">
+            <input type="text" id="searchItem" name="searchItem" th:value="${searchItem}" placeholder="Search..." />
+            <button type="submit" class="search-btn">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+        </form>
         <div th:if="${#authorization.expression('isAuthenticated()')}" style="display: flex;">
             <div class="user">
                 <p th:text="${#strings.toUpperCase(user.username)}"></p>
             </div>
             <div class="login">
-                <a href="http://localhost:8080/smartContactManager/logout"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
+                <a href="http://localhost:8080/smartContactManager/logout"><i
+                        class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
             </div>
         </div>
-        <div th:unless= "${#authorization.expression('isAuthenticated()')}" style="display: flex;">
+        <div th:unless="${#authorization.expression('isAuthenticated()')}" style="display: flex;">
             <div class="signup">
-                <a href="http://localhost:8080/smartContactManager/home/signup" ><i class="fa-solid fa-right-to-bracket"></i><span>SignUp</span></a>
+                <a href="http://localhost:8080/smartContactManager/home/signup"><i
+                        class="fa-solid fa-right-to-bracket"></i><span>SignUp</span></a>
             </div>
             <div class="login">
-                <a href="http://localhost:8080/smartContactManager/home/login"><i class="fa-solid fa-sign-in-alt"></i><span>LogIn</span></a>
+                <a href="http://localhost:8080/smartContactManager/home/login"><i
+                        class="fa-solid fa-sign-in-alt"></i><span>LogIn</span></a>
             </div>
         </div>
-    </nav>   
+    </nav>
 
     <nav class="vertical">
         <ul class="nav-link">
-            <li><a th:href= "@{/home}"><i class="fas fa-home"></i><span>Home</span></a></li>
+            <li><a th:href="@{/home}"><i class="fas fa-home"></i><span>Home</span></a></li>
             <li><a th:href="@{/user/viewContact/0}"><i class="fas fa-address-book"></i><span>ViewContact</span></a></li>
-            <li><a th:href= "@{/user/addContact}"><i class="fas fa-plus-circle"></i> <span>Add Contact</span></a></li>
-            <li><a th:href= "@{/user/profile}"><i class="fas fa-user-circle"></i><span>Your Profile</span></a></li>
-            <li><a th:href= "@{/logout}"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a></li>
+            <li><a th:href="@{/user/addContact}"><i class="fas fa-plus-circle"></i> <span>Add Contact</span></a></li>
+            <li><a th:href="@{/user/profile}"><i class="fas fa-user-circle"></i><span>Your Profile</span></a></li>
+            <li><a th:href="@{/logout}"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a></li>
         </ul>
     </nav>
-    <div class="main-content" >
-    </div> 
-    
+
     <script th:src="@{/js/script.js}"></script>
 </body>
+
 </html>

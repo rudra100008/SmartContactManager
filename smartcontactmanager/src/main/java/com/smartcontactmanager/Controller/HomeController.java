@@ -6,7 +6,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.Principal;
-
+import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -19,11 +20,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-
+import com.smartcontactmanager.Entity.Contact;
 import com.smartcontactmanager.Entity.User;
 import com.smartcontactmanager.Helper.Message;
+import com.smartcontactmanager.Services.ContactServices;
 import com.smartcontactmanager.Services.UserServices;
-
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -36,6 +37,13 @@ public class HomeController {
     private BCryptPasswordEncoder passwordEncoder;
     @Autowired
     private UserServices userServices;
+    @Autowired
+    private ContactServices contactServices;
+
+    @ModelAttribute
+    public void homeCommonData(Model model) {
+        model.addAttribute("title", "Smart Contact Manager");
+    }
 
     // http://localhost:8080/smartContactManager/home
     @GetMapping("/home")
@@ -102,16 +110,16 @@ public class HomeController {
                 throw new Exception("You have not agreed to the terms and conditions");
             }
             if (!userImage.isEmpty()) {
-                String uploadDir="src/main/resources/static/images/user/";
+                String uploadDir = "src/main/resources/static/images/user/";
                 File uploadDirFile = new File(uploadDir);
                 if (!uploadDirFile.exists()) {
                     uploadDirFile.mkdirs();
                 }
-                String fileName=userImage.getOriginalFilename();
-                Path path=Paths.get(uploadDir+fileName);
-                Files.copy(userImage.getInputStream(),path,StandardCopyOption.REPLACE_EXISTING);
+                String fileName = userImage.getOriginalFilename();
+                Path path = Paths.get(uploadDir + fileName);
+                Files.copy(userImage.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
                 user.setImageUrl(fileName);
-            }else{
+            } else {
                 user.setImageUrl("default.jpg");
             }
 
@@ -134,14 +142,37 @@ public class HomeController {
             return "signup";
         }
     }
+
     @GetMapping("/user/profile")
-    public String profileHandler(Principal principal,Model model)
-    {
+    public String profileHandler(Principal principal, Model model) {
         model.addAttribute("title", "Smart Contact Manager");
-        String username=principal.getName();
-        User getUser=this.userServices.findUserByUsername(username);
+        String username = principal.getName();
+        User getUser = this.userServices.findUserByUsername(username);
         model.addAttribute("user", getUser);
         return "profile";
+    }
+
+    @GetMapping("/home/search")
+    public String search(@RequestParam("searchItem") String searchItem, Model model, Principal principal) {
+        if (principal == null) {
+            return "redirect:/home/login";
+        }
+        String username = principal.getName();
+        User user = this.userServices.findUserByUsername(username);
+        model.addAttribute("user", user);
+        if (searchItem == null || searchItem.trim().isEmpty()) {
+            model.addAttribute("message", "Contact Not Found!!");
+        } else {
+            List<Contact> contacts = this.contactServices.searchItemContacts(searchItem).stream()
+                    .filter(contact -> contact.getUser()!=null && contact.getUser().getId() == user.getId()).collect(Collectors.toList());
+            if (contacts.isEmpty() ) {
+                model.addAttribute("message", "No contacts found matching the search criteria!");
+            } else {
+                model.addAttribute("contacts", contacts);
+                model.addAttribute("searchItem", searchItem);
+            }
+        }
+        return "search";
     }
 
 }

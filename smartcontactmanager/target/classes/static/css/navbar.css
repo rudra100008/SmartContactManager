@@ -21,12 +21,13 @@ nav.horizontal {
     left: 0;
     width: 100vw;
     height: 60px;
-    z-index:  99999;
-    /* box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);  */
-    transition: left 0.3s ease-in-out, width 0.3s ease-in-out;
+    z-index: 99999;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.1); 
 }
 
+/* Logo Styles */
 .logo-horizontal {
+    flex: 0 1 auto; /* Allows logo to take only the necessary space */
     font-family: 'Pacifico', cursive;
     background: linear-gradient(45deg, #FF6B6B, #FFD93D);
     font-weight: bold;
@@ -49,25 +50,53 @@ nav.horizontal {
     text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
 }
 
+/* Search Bar Styles */
 .nav-center {
     display: flex;
     align-items: center;
+    flex: 1; /* Allows the search bar to take remaining space */
     justify-content: center;
-    width: 100%;
+    position: relative;
+    margin: 0 20px; /* Add margin to create space around the search bar */
 }
 
 .nav-center input[type="text"] {
     font-size: 14px;
-    padding: 8px 15px;
-    border-radius: 20px; /* Softer corners */
+    padding: 8px 40px 8px 15px; 
+    border-radius: 20px; 
     border: 1px solid #ccc;
     width: 250px;
     transition: border-color 0.3s ease-in-out, width 0.3s ease-in-out;
+    box-sizing: border-box; 
 }
 
 .nav-center input[type="text"]:focus {
     border-color: #007bff;
     width: 300px;
+}
+
+.nav-center .search-btn {
+    position: absolute;
+    right: 200px; 
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    color: #666;
+    font-size: 18px;
+    transition: color 0.3s ease, right 0.3s ease-in-out;
+}
+
+.nav-center input[type="text"]:focus + .search-btn {
+    right: 180px; /* Adjust based on the input's focus behavior */
+}
+
+.nav-center .search-btn:hover i {
+    color: #007bff;
+}
+
+.nav-center .search-btn:focus i {
+    color: #0056b3;
 }
 
 /* Vertical Navbar Styles */
@@ -99,7 +128,7 @@ nav.vertical.open .nav-link i {
 }
 .vertical .nav-link a i {
     margin-right: 10px;
-    transition: font-size 0.3s ease;
+    transition: font-size 0.3s ease-in-out;
 }
 .vertical .nav-link {
     list-style-type: none;

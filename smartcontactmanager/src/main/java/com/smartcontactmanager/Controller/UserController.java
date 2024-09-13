@@ -36,6 +36,7 @@ public class UserController {
     private UserServices userServices;
     @Autowired
     private ContactServices contactServices;
+
     @ModelAttribute
     public void addCommonData(Model model, Principal principal) {
         String username = principal.getName();
@@ -46,15 +47,14 @@ public class UserController {
 
     // http://localhost:8080/smartContactManager/user/viewContact
     @GetMapping("/viewContact/{page}")
-    public String dashboard(@PathVariable("page") int page,Model model, Principal principal) {
-        model.addAttribute("title", "Contacts");
+    public String dashboard(@PathVariable("page") int page, Model model, Principal principal) {
         String username = principal.getName();
         User user = userServices.findUserByUsername(username);
-        PageRequest pageInfo=  PageRequest.of(page, 3);
-        Page<Contact> contacts = this.contactServices.getContactsByID(user.getId(),pageInfo);
-        if (contacts.getTotalElements()==0) {
+        PageRequest pageInfo = PageRequest.of(page, 3);
+        Page<Contact> contacts = this.contactServices.getContactsByID(user.getId(), pageInfo);
+        if (contacts.getTotalElements() == 0) {
             model.addAttribute("message1", "No Contacts Available!!!");
-        }else{
+        } else {
             model.addAttribute("contacts", contacts);
         }
         model.addAttribute("currentPage", page);
@@ -66,7 +66,6 @@ public class UserController {
 
     @GetMapping("/addContact")
     public String contactFormHandler(Model model, HttpSession session) {
-        model.addAttribute("title", "addContact");
         model.addAttribute("contact", new Contact());
         Message message = (Message) session.getAttribute("message");
         if (message != null) {
@@ -77,63 +76,60 @@ public class UserController {
     }
 
     @PostMapping("/addContact")
-public String formProcessing(@Valid @ModelAttribute("contact") Contact contact,
-        BindingResult result,
-        @RequestParam("profileImage") MultipartFile imageFile,
-        Model model,
-        Principal principal,
-        HttpSession session) {
-    try {
-        model.addAttribute("title", "addContact");
-        model.addAttribute("contact", contact);
-        String username = principal.getName();
-        User user = this.userServices.findUserByUsername(username);
-
-        if (contact != null) {
-            // Check if contact attributes are empty
-            if (contact.getContactname().isEmpty() || contact.getEmail().isEmpty() || contact.getPhonenumber().isEmpty()) {
-                session.setAttribute("message", new Message("Contact is not registered! Please enter required details", "alert-danger"));
-                return "normal/contactForm";
-            }
-
-            // Handle validation errors
-            if (result.hasErrors()) {
-                model.addAttribute("contact", contact);
-                return "normal/contactForm";
-            }
-
-            // Handle file upload
-            if (!imageFile.isEmpty()) {
-                String uploadDir = "src/main/resources/static/images/";
-                File uploadDirFile = new File(uploadDir);
-                if (!uploadDirFile.exists()) {
-                    uploadDirFile.mkdirs();
+    public String formProcessing(@Valid @ModelAttribute("contact") Contact contact,
+            BindingResult result,
+            @RequestParam("profileImage") MultipartFile imageFile,
+            Model model,
+            Principal principal,
+            HttpSession session) {
+        try {
+            model.addAttribute("title", "addContact");
+            model.addAttribute("contact", contact);
+            String username = principal.getName();
+            User user = this.userServices.findUserByUsername(username);
+    
+            if (contact != null) {
+                if (contact.getContactname().isEmpty() || contact.getEmail().isEmpty()
+                        || contact.getPhonenumber().isEmpty()) {
+                    session.setAttribute("message",
+                            new Message("Contact is not registered! Please enter required details", "alert-danger"));
+                    return "normal/contactForm";
                 }
-                String fileName = imageFile.getOriginalFilename();
-                Path path = Paths.get(uploadDir + fileName); // File path
-                Files.copy(imageFile.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-                contact.setImage(fileName);
-            } else {
-                contact.setImage("contact.jpg");
+    
+                if (result.hasErrors()) {
+                    model.addAttribute("contact", contact);
+                    return "normal/contactForm";
+                }
+                if (!imageFile.isEmpty()) {
+                    String uploadDir = "src/main/resources/static/images/";
+                    File uploadDirFile = new File(uploadDir);
+                    if (!uploadDirFile.exists()) {
+                        uploadDirFile.mkdirs();
+                    }
+                    String fileName = imageFile.getOriginalFilename();
+                    Path path = Paths.get(uploadDir + fileName); // File path
+                    Files.copy(imageFile.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+                    contact.setImage(fileName);
+                }
+    
+                try {
+                    contactServices.saveContact(contact, user);
+                    session.setAttribute("message", new Message("Contact is registered", "alert-success"));
+                } catch (IllegalArgumentException e) {
+                    session.setAttribute("message", new Message(e.getLocalizedMessage(), "alert-danger"));
+                }
+    
+                return "normal/contactForm";
             }
-
-            contact.setUser(user);
-            user.getContacts().add(contact);
-            this.userServices.saveUser(user);
-
-            // Set success message
-            session.setAttribute("message", new Message("Contact is registered", "alert-success"));
+            return "normal/contactForm";
+        } catch (Exception e) {
+            e.printStackTrace();
+            session.setAttribute("message",
+                    new Message("Something went wrong: " + e.getLocalizedMessage(), "alert-danger"));
+            return "normal/contactForm";
         }
-
-        return "normal/contactForm";
-    } catch (Exception e) {
-        e.printStackTrace();
-        session.setAttribute("message", new Message("Something went wrong: " + e.getLocalizedMessage(), "alert-danger"));
-        return "normal/contactForm";
     }
-}
-
-
+    
     @GetMapping("/delete/{cid}")
     public String deleteContact(@PathVariable("cid") int cid) {
         this.contactServices.deleteByID(cid);
@@ -141,10 +137,14 @@ public String formProcessing(@Valid @ModelAttribute("contact") Contact contact,
     }
 
     @GetMapping("/update/{cid}")
-    public String update(@PathVariable("cid") Integer cid, Model model) {
+    public String update(@PathVariable("cid") Integer cid, Model model,HttpSession session) {
         Contact contact = this.contactServices.findByIdContact(cid);
         if (contact == null) {
             return "redirect:/error";
+        }
+        Message message=(Message)session.getAttribute("message");
+        if (message!=null) {
+            session.removeAttribute("message");   
         }
         model.addAttribute("contact", contact);
         return "normal/updateForm";
@@ -158,7 +158,6 @@ public String formProcessing(@Valid @ModelAttribute("contact") Contact contact,
             Principal principal,
             HttpSession session) {
         try {
-            model.addAttribute("title", "updateContact");
             String username = principal.getName();
             User user = this.userServices.findUserByUsername(username);
 
@@ -182,9 +181,7 @@ public String formProcessing(@Valid @ModelAttribute("contact") Contact contact,
                     Contact existingContact = this.contactServices.findByIdContact(contact.getCid());
                     contact.setImage(existingContact.getImage());
                 }
-
-                contact.setUser(user);
-                this.contactServices.updateContact(contact);
+                this.contactServices.saveContact(contact,user);
                 session.setAttribute("message", new Message("Contact is updated", "alert-success"));
                 return "redirect:/user/viewContact/0";
             }
@@ -196,11 +193,15 @@ public String formProcessing(@Valid @ModelAttribute("contact") Contact contact,
             return "normal/updateForm";
         }
     }
+
     @GetMapping("/contactDetails/{cid}")
-    public String contactDetailsHandler(@PathVariable("cid") int cid,Model model)
-    {
-        Contact contact =this.contactServices.findByIdContact(cid);
-        model.addAttribute("contact", contact);
+    public String contactDetailsHandler(@PathVariable("cid") int cid, Model model, Principal principal) {
+        String username = principal.getName();
+        User user = this.userServices.findUserByUsername(username);
+        Contact contact = this.contactServices.findByIdContact(cid);
+        if (user.getId() == contact.getUser().getId()) {
+            model.addAttribute("contact", contact);
+        }
         return "normal/contactDetails";
     }
 

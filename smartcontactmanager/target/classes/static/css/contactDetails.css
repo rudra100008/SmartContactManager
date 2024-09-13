@@ -106,3 +106,31 @@ body {
     background-color: #004d40;
     transform: translateY(0);
 }
+.no-contacts {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60vh; /* Adjust height as needed */
+    text-align: center;
+    margin-top: 20px;
+}
+
+.no-contacts-content {
+    background-color: #f8d7da; /* Light red background for the alert */
+    color: #721c24; /* Dark red color for the text */
+    border: 1px solid #f5c6cb; /* Light red border */
+    border-radius: 5px;
+    padding: 20px;
+    max-width: 500px;
+    width: 100%;
+}
+
+.no-contacts-icon {
+    font-size: 3rem; /* Adjust size as needed */
+    margin-bottom: 10px;
+}
+
+.no-contacts h1 {
+    font-size: 2rem;
+    margin: 0;
+}

@@ -14,10 +14,19 @@ public class ContactServices {
     @Autowired
     private ContactDao contactDao;
 
-    public Contact saveContacts(Contact contact)
+    public Contact saveContact(Contact contact,User user)
     {
-        Contact saveContact =contactDao.save(contact);
-        return saveContact;
+        if (contactDao.existsByContactnameAndUser(contact.getContactname(), user)) {
+            throw new IllegalArgumentException("Contact name is already in use");
+        }
+        if (contactDao.existsByEmailAndUser(contact.getEmail(), user)) {
+            throw new IllegalArgumentException("Email is already in use");
+        }
+        if (contactDao.existsByPhonenumberAndUser(contact.getPhonenumber(), user)) {
+            throw new IllegalArgumentException("Phone number  is already in use");
+        }
+        contact.setUser(user);
+        return contactDao.save(contact);
     }
 
     public List<Contact> getContactsByUser(User user) {
@@ -31,13 +40,26 @@ public class ContactServices {
     {
         return this.contactDao.findById(id).orElse(null);
     }
-    public void updateContact(Contact contact)
+    public void updateContact(Contact contact,User user)
     {
+        if (contactDao.existsByContactnameAndUser(contact.getContactname(), user)) {
+            throw new IllegalArgumentException("Contact name is already in use.");
+        }
+        if (contactDao.existsByEmailAndUser(contact.getEmail(), user)) {
+            throw new IllegalArgumentException("Email already in user");            
+        }
+        if (contactDao.existsByPhonenumberAndUser(contact.getPhonenumber(), user)) {
+            throw new IllegalArgumentException("Phone number is already in use");
+        }
         this.contactDao.save(contact);
     }
     public Page<Contact> getContactsByID(int id,Pageable pageable)
     {
         return contactDao.findUserByID(id,pageable);
+    }
+    public List<Contact> searchItemContacts(String searchItem)
+    {
+        return this.contactDao.searchContact(searchItem);
     }
     
 }

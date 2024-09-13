@@ -15,4 +15,17 @@ public interface ContactDao extends JpaRepository<Contact,Integer>{
    //pageable has two information contact per page and current page
    @Query("select c from Contact as c where c.user.id=:userID")
    Page<Contact> findUserByID(@Param("userID")int id,Pageable pageable);
-} 
+
+   @Query("select c from Contact as c WHERE " +
+         "LOWER(c.contactname) LIKE LOWER(CONCAT('%',:searchItem,'%')) OR "+
+         "LOWER(c.email) LIKE LOWER(CONCAT('%',:searchItem,'%')) OR "+
+         "LOWER(c.phonenumber) LIKE LOWER(CONCAT('%',:searchItem,'%'))"
+      )
+   List<Contact> searchContact(@Param("searchItem") String searchItem);
+   boolean existsByContactnameAndUser(String contactname, User user);
+   boolean existsByEmailAndUser(String email, User user);
+   boolean existsByPhonenumberAndUser(String phonenumber, User user);
+
+   
+}
+

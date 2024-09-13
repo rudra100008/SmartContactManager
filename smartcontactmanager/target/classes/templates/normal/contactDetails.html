@@ -11,7 +11,7 @@
 <body>
     <section th:replace="~{normal/navbar2 :: navbar2(${title}) }"></section>
     <div class="main-content">
-        <div class="container">
+        <div class="container" th:if="${contact}">
             <div class="card-header">
                 Contact Details
             </div>
@@ -46,6 +46,12 @@
                     </ul>
                     <a th:href="@{'/user/update/'+${contact.cid}}" class="edit-btn">Edit</a>
                 </div>
+            </div>
+        </div>
+        <div th:unless= "${contact}" class="no-contacts">
+            <div class="no-contacts-content">
+                <i class="fa-solid fa-exclamation-circle no-contacts-icon"></i>
+                <h1 >You don't have permission to see this contact!!</h1>
             </div>
         </div>
     </div>

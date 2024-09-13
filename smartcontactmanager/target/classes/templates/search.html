@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en"xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/card.css}">
+    <title>Search Result</title>
+</head>
+<body>
+    <nav th:replace="~{navbar :: navbar(${title})}"></nav>
+    <div class="main-content">
+        <h2>Search Result</h2>
+    <div th:each=" contact: ${contacts}" class="contact-card" >
+        <div>
+            <img th:src="@{/images/{image}(image=${contact.image})}" alt="Contact image"/>
+        </div>
+        <div class="contact-details">
+            <h3><span>Name:</span><span th:text="${contact.contactname}"></span></h3>
+            <p><span>Email:</span><a th:href="@{'/user/contactDetails/'+${contact.cid}}"><span th:text="${contact.email}"></span></a></p>
+            <p><span>PhoneNumber:</span><span th:text="${contact.phonenumber}"></span></p>
+        </div>
+    </div>
+    <div th:if="${message}" class="no-contacts" >
+        <div class="no-contacts-content">
+            <h1 th:text="${message}"></h1>
+        </div>
+    </div>
+</div>
+</body>
+</html>

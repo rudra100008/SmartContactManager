@@ -38,7 +38,7 @@ public class User {
     private String about;
     //one user can have  many contacts
     //cascade all contact to one user
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "user")
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "user",orphanRemoval = true)
     private List<Contact> contact =new ArrayList<Contact>();
 
     public User(){
